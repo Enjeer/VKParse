@@ -1,5 +1,7 @@
 .env
 
+/google-keys.json
+
 /node_modules
 
 /cookies.json
