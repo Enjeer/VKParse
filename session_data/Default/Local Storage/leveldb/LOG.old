@@ -1,0 +1,7 @@
+2026/04/22-22:27:37.073 6a88 Reusing MANIFEST C:\Users\Enjeer\.1 - Main\Brainlook\VKParse\session_data\Default\Local Storage\leveldb/MANIFEST-000001
+2026/04/22-22:27:37.077 6a88 Recovering log #46
+2026/04/22-22:27:37.077 6a88 Level-0 table #48: started
+2026/04/22-22:27:37.082 6a88 Level-0 table #48: 145161 bytes OK
+2026/04/22-22:27:37.082 6a88 Recovering log #47
+2026/04/22-22:27:37.084 6a88 Reusing old log C:\Users\Enjeer\.1 - Main\Brainlook\VKParse\session_data\Default\Local Storage\leveldb/000047.log 
+2026/04/22-22:27:37.085 6a88 Delete type=0 #46

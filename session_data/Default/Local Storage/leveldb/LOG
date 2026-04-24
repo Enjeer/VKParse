@@ -1,0 +1,17 @@
+2026/04/22-22:34:45.983 8378 Reusing MANIFEST C:\Users\Enjeer\.1 - Main\Brainlook\VKParse\session_data\Default\Local Storage\leveldb/MANIFEST-000001
+2026/04/22-22:34:45.987 8378 Recovering log #47
+2026/04/22-22:34:45.989 8378 Reusing old log C:\Users\Enjeer\.1 - Main\Brainlook\VKParse\session_data\Default\Local Storage\leveldb/000047.log 
+2026/04/22-22:34:52.977 1ec4 Level-0 table #51: started
+2026/04/22-22:34:52.981 1ec4 Level-0 table #51: 20639 bytes OK
+2026/04/22-22:34:52.982 1ec4 Delete type=0 #47
+2026/04/22-22:34:52.983 1ec4 Compacting 4@0 + 1@1 files
+2026/04/22-22:34:52.987 1ec4 Generated table #52@0: 131 keys, 194311 bytes
+2026/04/22-22:34:52.987 1ec4 Compacted 4@0 + 1@1 files => 194311 bytes
+2026/04/22-22:34:52.988 1ec4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2026/04/22-22:34:52.989 1ec4 Delete type=2 #41
+2026/04/22-22:34:52.989 1ec4 Delete type=2 #44
+2026/04/22-22:34:52.989 1ec4 Delete type=2 #46
+2026/04/22-22:34:52.989 1ec4 Delete type=2 #48
+2026/04/22-22:34:52.989 1ec4 Delete type=2 #51
+2026/04/22-22:35:07.443 7a84 Level-0 table #54: started
+2026/04/22-22:35:07.451 7a84 Level-0 table #54: 132188 bytes OK

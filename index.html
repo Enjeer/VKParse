@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VK Sender Panel</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        .container { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 500px; }
+        h3 { color: #1c1e21; margin-bottom: 15px; font-size: 18px; }
+        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        .row { display: flex; gap: 10px; }
+        .row input { flex: 1; }
+        button { width: 100%; padding: 12px; background: #0077ff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; margin-top: 10px; }
+        button:hover { background: #0061d5; }
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+        
+        #console {
+            width: 100%;
+            max-width: 500px;
+            background: #1e1e1e;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            height: 250px;
+            overflow-y: auto;
+            font-size: 12px;
+            line-height: 1.4;
+            box-shadow: inset 0 0 10px #000;
+        }
+        .log-entry { margin-bottom: 4px; border-bottom: 1px solid #333; padding-bottom: 2px; }
+        .log-time { color: #888; margin-right: 8px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="parser-block">
+            <h3>1. Сбор базы (Google Sheets)</h3>
+            <input id="groupUrl" placeholder="https://vk.com/club123">
+            <input id="category" placeholder="Напр: Дизайнеры">
+            <div class="row">
+                <input id="userCount" type="number" placeholder="Кол-во (напр: 100)" value="50">
+                <input id="scrollDelay" type="number" placeholder="Задержка (мс)" value="2000">
+            </div>
+            <button id="btnParse" onclick="startParse()">Собрать участников</button>
+        </div>
+
+        <hr>
+
+        <div id="sender-block">
+            <h3>2. Рассылка по таблице</h3>
+            <textarea id="message" rows="3" placeholder="Текст сообщения..."></textarea>
+            <button id="btnSend" onclick="startSend()" style="background: #28a745;">Запустить рассылку</button>
+        </div>
+    </div>
+
+    <div id="console"></div>
+
+    <script>
+        const consoleEl = document.getElementById('console');
+
+        function addLog(text) {
+            if (!text) return;
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            entry.innerHTML = `<span class="log-time">[${time}]</span> ${text}`;
+            consoleEl.appendChild(entry);
+            consoleEl.scrollTop = consoleEl.scrollHeight; 
+        }
+
+        async function startParse() {
+            const groupUrl = document.getElementById('groupUrl').value;
+            const category = document.getElementById('category').value;
+            const count = document.getElementById('userCount').value;
+            const scrollDelay = document.getElementById('scrollDelay').value;
+
+            if(!groupUrl) return alert('Введите ссылку!');
+
+            addLog(`Запрос на сбор ${count} пользователей...`);
+            
+            await fetch('/api/parse', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({ groupUrl, category, count: parseInt(count), scrollDelay: parseInt(scrollDelay) }) 
+            });
+        }
+
+        async function startSend() {
+            const message = document.getElementById('message').value;
+            if(!message) return alert('Введите текст!');
+            addLog('Запуск рассылки...');
+            await fetch('/api/send', { 
+                method: 'POST', 
+                headers: {'Content-Type': 'application/json'}, 
+                body: JSON.stringify({ message }) 
+            });
+        }
+
+        setInterval(async () => {
+            try {
+                const res = await fetch('/api/logs');
+                const data = await res.json();
+                if (data.logs) data.logs.forEach(msg => addLog(msg));
+            } catch (e) {}
+        }, 1500);
+    </script>
+</body>
+</html>
